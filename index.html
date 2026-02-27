@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>КадастрПро — Межевание и кадастровые работы в Ростовской области</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0f2240;
+    --blue: #1a4b8c;
+    --blue-mid: #2563b0;
+    --sky: #3b8bd0;
+    --accent: #f59e0b;
+    --accent-light: #fbbf24;
+    --green: #16a34a;
+    --light: #f4f7fc;
+    --white: #ffffff;
+    --gray: #6b7280;
+    --text: #1e293b;
+    --border: #dde4ef;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito Sans', sans-serif;
+    color: var(--text);
+    background: var(--white);
+    overflow-x: hidden;
+  }
+
+  h1,h2,h3,h4 { font-family: 'Playfair Display', serif; }
+
+  /* ── HEADER ── */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(15,34,64,0.97);
+    backdrop-filter: blur(8px);
+    padding: 14px 0;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .header-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+    gap: 16px;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-icon {
+    width: 40px; height: 40px; background: var(--accent);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .logo-text { color: var(--white); }
+  .logo-text strong { display: block; font-family: 'Playfair Display', serif; font-size: 18px; line-height: 1; }
+  .logo-text span { font-size: 11px; opacity: 0.65; letter-spacing: 0.5px; }
+
+  .header-contacts { display: flex; align-items: center; gap: 20px; }
+  .header-phone {
+    color: var(--white); text-decoration: none; font-size: 15px; font-weight: 700;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .header-phone:hover { color: var(--accent); }
+  .btn-wa {
+    background: #25d366; color: var(--white);
+    padding: 8px 16px; border-radius: 8px; text-decoration: none;
+    font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px;
+    transition: background .2s;
+  }
+  .btn-wa:hover { background: #1ebe5a; }
+  .btn-callback {
+    background: var(--accent); color: var(--navy);
+    padding: 8px 18px; border-radius: 8px; border: none; cursor: pointer;
+    font-size: 13px; font-weight: 700; font-family: inherit;
+    transition: background .2s;
+  }
+  .btn-callback:hover { background: var(--accent-light); }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a3d70 50%, #0f2240 100%);
+    padding: 130px 24px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    position: relative;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.4);
+    color: var(--accent); padding: 6px 14px; border-radius: 100px;
+    font-size: 13px; font-weight: 600; margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 3.5vw, 48px); color: var(--white);
+    line-height: 1.2; margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub {
+    color: rgba(255,255,255,0.75); font-size: 16px; line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .hero-region {
+    color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 32px;
+  }
+  .hero-region span { color: var(--sky); font-weight: 600; }
+
+  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+  .btn-primary {
+    background: var(--accent); color: var(--navy);
+    padding: 14px 28px; border-radius: 10px; text-decoration: none;
+    font-weight: 800; font-size: 15px; border: none; cursor: pointer; font-family: inherit;
+    transition: all .2s; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,158,11,0.4); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    padding: 14px 28px; border-radius: 10px; text-decoration: none;
+    font-weight: 700; font-size: 15px; border: 2px solid rgba(255,255,255,0.3); cursor: pointer; font-family: inherit;
+    transition: all .2s; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.1); }
+
+  .hero-advantages { display: flex; gap: 24px; flex-wrap: wrap; }
+  .hero-adv-item {
+    display: flex; align-items: center; gap: 8px;
+    color: rgba(255,255,255,0.8); font-size: 13px;
+  }
+  .hero-adv-item .dot {
+    width: 8px; height: 8px; background: var(--accent); border-radius: 50%; flex-shrink: 0;
+  }
+
+  .hero-right { display: flex; flex-direction: column; gap: 16px; }
+  .hero-card {
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px; padding: 20px 24px;
+    backdrop-filter: blur(10px);
+    transition: transform .2s;
+  }
+  .hero-card:hover { transform: translateX(4px); }
+  .hero-card-icon { font-size: 28px; margin-bottom: 8px; }
+  .hero-card h4 { color: var(--white); font-size: 15px; margin-bottom: 4px; }
+  .hero-card p { color: rgba(255,255,255,0.6); font-size: 13px; line-height: 1.5; }
+
+  /* ── SEGMENTS ── */
+  .section { padding: 80px 24px; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    display: inline-block; background: rgba(37,99,176,0.1); color: var(--blue);
+    padding: 4px 14px; border-radius: 100px; font-size: 12px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(26px, 3vw, 40px); color: var(--navy);
+    margin-bottom: 12px; line-height: 1.2;
+  }
+  .section-subtitle { color: var(--gray); font-size: 16px; max-width: 600px; }
+
+  .segments-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px; margin-top: 48px;
+  }
+  .segment-card {
+    background: var(--white); border: 1.5px solid var(--border);
+    border-radius: 16px; padding: 32px 28px;
+    transition: all .3s; position: relative; overflow: hidden;
+  }
+  .segment-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--sky));
+    transform: scaleX(0); transition: transform .3s; transform-origin: left;
+  }
+  .segment-card:hover { border-color: var(--sky); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(26,75,140,0.12); }
+  .segment-card:hover::before { transform: scaleX(1); }
+  .segment-icon { font-size: 36px; margin-bottom: 16px; }
+  .segment-card h3 { font-size: 18px; color: var(--navy); margin-bottom: 14px; }
+  .segment-list { list-style: none; }
+  .segment-list li {
+    color: var(--gray); font-size: 14px; line-height: 1.5; padding: 5px 0;
+    border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 8px;
+  }
+  .segment-list li:last-child { border-bottom: none; }
+  .segment-list li::before { content: '→'; color: var(--sky); font-weight: 700; flex-shrink: 0; }
+
+  /* ── SERVICES ── */
+  .services-bg { background: var(--light); }
+  .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 40px 0 32px; }
+  .tab-btn {
+    padding: 10px 20px; border-radius: 8px; border: 1.5px solid var(--border);
+    background: var(--white); color: var(--gray); font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: inherit; transition: all .2s;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background: var(--blue); color: var(--white); border-color: var(--blue);
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+  .service-item {
+    background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px; display: flex; align-items: flex-start; gap: 12px;
+    transition: all .2s;
+  }
+  .service-item:hover { border-color: var(--sky); box-shadow: 0 4px 16px rgba(26,75,140,0.08); }
+  .service-num {
+    width: 32px; height: 32px; background: rgba(37,99,176,0.1); color: var(--blue);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 800; flex-shrink: 0;
+  }
+  .service-item p { color: var(--text); font-size: 14px; line-height: 1.5; }
+
+  /* ── WHY US ── */
+  .utp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 48px; }
+  .utp-card {
+    background: var(--white); border: 1.5px solid var(--border);
+    border-radius: 16px; padding: 28px;
+    display: flex; gap: 18px; align-items: flex-start;
+    transition: all .3s;
+  }
+  .utp-card:hover { border-color: var(--accent); box-shadow: 0 8px 32px rgba(245,158,11,0.1); }
+  .utp-num {
+    width: 48px; height: 48px; background: linear-gradient(135deg, var(--blue), var(--sky));
+    color: var(--white); border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900; flex-shrink: 0;
+  }
+  .utp-card h4 { color: var(--navy); font-size: 16px; margin-bottom: 6px; }
+  .utp-card p { color: var(--gray); font-size: 14px; line-height: 1.6; }
+  .utp-bonus {
+    background: linear-gradient(135deg, var(--navy), var(--blue-mid));
+    border-radius: 16px; padding: 28px 32px;
+    display: flex; align-items: center; gap: 20px;
+    grid-column: 1 / -1; margin-top: 8px;
+  }
+  .utp-bonus-icon { font-size: 40px; flex-shrink: 0; }
+  .utp-bonus h4 { color: var(--accent); font-size: 18px; margin-bottom: 4px; }
+  .utp-bonus p { color: rgba(255,255,255,0.75); font-size: 14px; }
+
+  /* ── CASES ── */
+  .cases-bg { background: var(--light); }
+  .cases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 48px; }
+  .case-card {
+    background: var(--white); border-radius: 16px; overflow: hidden;
+    border: 1.5px solid var(--border); transition: all .3s;
+  }
+  .case-card:hover { box-shadow: 0 12px 40px rgba(26,75,140,0.12); transform: translateY(-4px); }
+  .case-header {
+    background: linear-gradient(135deg, var(--navy), var(--blue));
+    padding: 20px 24px;
+  }
+  .case-tag {
+    display: inline-block; background: rgba(245,158,11,0.2); color: var(--accent);
+    padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.5px; margin-bottom: 8px;
+  }
+  .case-header h4 { color: var(--white); font-size: 16px; }
+  .case-body { padding: 24px; }
+  .case-row { margin-bottom: 14px; }
+  .case-row:last-child { margin-bottom: 0; }
+  .case-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .case-label.problem { color: #dc2626; }
+  .case-label.solution { color: var(--blue); }
+  .case-label.result { color: var(--green); }
+  .case-row p { color: var(--text); font-size: 14px; line-height: 1.5; }
+  .case-result-badge {
+    background: rgba(22,163,74,0.08); border: 1px solid rgba(22,163,74,0.3);
+    border-radius: 8px; padding: 10px 14px;
+  }
+  .case-result-badge p { color: var(--green); font-weight: 600; }
+
+  /* ── PROCESS ── */
+  .process-steps {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0; margin-top: 48px; position: relative;
+  }
+  .process-steps::before {
+    content: '';
+    position: absolute; top: 40px; left: 10%; right: 10%;
+    height: 2px; background: linear-gradient(90deg, var(--sky), var(--accent));
+    z-index: 0;
+  }
+  .process-step {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    padding: 0 12px; position: relative; z-index: 1;
+  }
+  .step-circle {
+    width: 80px; height: 80px;
+    background: linear-gradient(135deg, var(--blue), var(--sky));
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: var(--white); font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900;
+    margin-bottom: 16px; border: 4px solid var(--white);
+    box-shadow: 0 4px 20px rgba(26,75,140,0.25);
+  }
+  .process-step h4 { color: var(--navy); font-size: 15px; margin-bottom: 8px; }
+  .process-step p { color: var(--gray); font-size: 13px; line-height: 1.5; }
+
+  /* ── TEAM ── */
+  .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-top: 48px; }
+  .team-card {
+    background: var(--white); border: 1.5px solid var(--border); border-radius: 16px;
+    padding: 28px; text-align: center; transition: all .3s;
+  }
+  .team-card:hover { border-color: var(--sky); transform: translateY(-4px); box-shadow: 0 12px 36px rgba(26,75,140,0.1); }
+  .team-avatar {
+    width: 80px; height: 80px; background: linear-gradient(135deg, var(--navy), var(--sky));
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 32px; margin: 0 auto 16px; color: var(--white);
+  }
+  .team-card h4 { color: var(--navy); font-size: 16px; margin-bottom: 4px; }
+  .team-card .role { color: var(--sky); font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+  .team-card p { color: var(--gray); font-size: 13px; line-height: 1.5; }
+  .tech-block {
+    background: linear-gradient(135deg, var(--navy), var(--blue));
+    border-radius: 16px; padding: 28px 32px; margin-top: 24px;
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  }
+  .tech-icon { font-size: 36px; }
+  .tech-block h4 { color: var(--accent); font-size: 16px; margin-bottom: 6px; }
+  .tech-block p { color: rgba(255,255,255,0.75); font-size: 14px; line-height: 1.6; }
+
+  /* ── REVIEWS ── */
+  .reviews-bg { background: var(--light); }
+  .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 48px; }
+  .review-card {
+    background: var(--white); border: 1.5px solid var(--border); border-radius: 16px;
+    padding: 28px; transition: all .3s;
+  }
+  .review-card:hover { border-color: var(--blue); box-shadow: 0 8px 32px rgba(26,75,140,0.1); }
+  .stars { color: var(--accent); font-size: 16px; margin-bottom: 12px; }
+  .review-card p { color: var(--text); font-size: 15px; line-height: 1.7; font-style: italic; margin-bottom: 16px; }
+  .reviewer { display: flex; align-items: center; gap: 12px; }
+  .reviewer-avatar {
+    width: 44px; height: 44px; background: linear-gradient(135deg, var(--navy), var(--sky));
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: var(--white); font-weight: 700; font-size: 16px; flex-shrink: 0;
+  }
+  .reviewer-name { color: var(--navy); font-weight: 700; font-size: 14px; }
+  .reviewer-role { color: var(--gray); font-size: 12px; }
+
+  /* ── FAQ ── */
+  .faq-list { margin-top: 48px; display: flex; flex-direction: column; gap: 12px; max-width: 860px; }
+  .faq-item {
+    background: var(--white); border: 1.5px solid var(--border); border-radius: 12px;
+    overflow: hidden; transition: border-color .2s;
+  }
+  .faq-item.open { border-color: var(--sky); }
+  .faq-q {
+    width: 100%; text-align: left; padding: 20px 24px;
+    background: none; border: none; cursor: pointer; font-family: inherit;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    font-size: 15px; font-weight: 700; color: var(--navy);
+  }
+  .faq-q .arrow {
+    width: 28px; height: 28px; background: var(--light); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; flex-shrink: 0; transition: transform .2s, background .2s;
+  }
+  .faq-item.open .faq-q .arrow { transform: rotate(180deg); background: var(--sky); color: var(--white); }
+  .faq-a {
+    max-height: 0; overflow: hidden; transition: max-height .3s ease;
+    padding: 0 24px; color: var(--gray); font-size: 14px; line-height: 1.7;
+  }
+  .faq-a.open { max-height: 300px; padding: 0 24px 20px; }
+  .faq-a ul { margin-top: 8px; }
+  .faq-a ul li { padding: 3px 0; }
+
+  /* ── PRICES ── */
+  .prices-bg { background: var(--light); }
+  .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 48px; }
+  .price-card {
+    background: var(--white); border: 1.5px solid var(--border); border-radius: 14px;
+    padding: 24px 20px; text-align: center; transition: all .3s;
+  }
+  .price-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .price-card .price-icon { font-size: 32px; margin-bottom: 12px; }
+  .price-card h4 { color: var(--navy); font-size: 14px; margin-bottom: 10px; line-height: 1.4; }
+  .price-amount { color: var(--blue); font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; }
+  .price-from { color: var(--gray); font-size: 12px; }
+  .price-note { color: var(--gray); font-size: 11px; margin-top: 6px; }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4b8c 100%);
+    padding: 80px 24px;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute; top: -50%; left: -50%; right: -50%; bottom: -50%;
+    background: radial-gradient(ellipse at center, rgba(59,139,208,0.15) 0%, transparent 70%);
+  }
+  .cta-inner { max-width: 640px; margin: 0 auto; position: relative; }
+  .cta-section h2 { color: var(--white); font-size: clamp(28px, 3.5vw, 42px); margin-bottom: 12px; }
+  .cta-section p { color: rgba(255,255,255,0.75); font-size: 16px; margin-bottom: 40px; line-height: 1.6; }
+
+  .contact-form {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px; padding: 32px; backdrop-filter: blur(10px);
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .form-row.single { grid-template-columns: 1fr; }
+  .form-input {
+    width: 100%; padding: 14px 16px; border-radius: 10px;
+    border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08);
+    color: var(--white); font-family: inherit; font-size: 14px;
+    transition: border-color .2s; outline: none;
+  }
+  .form-input::placeholder { color: rgba(255,255,255,0.4); }
+  .form-input:focus { border-color: var(--sky); }
+  .btn-submit {
+    width: 100%; padding: 16px; background: var(--accent); color: var(--navy);
+    border: none; border-radius: 10px; font-family: inherit; font-size: 16px;
+    font-weight: 800; cursor: pointer; transition: all .2s; margin-top: 4px;
+  }
+  .btn-submit:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,158,11,0.4); }
+  .form-note { color: rgba(255,255,255,0.4); font-size: 11px; margin-top: 10px; }
+
+  .messengers { display: flex; gap: 12px; justify-content: center; margin-top: 24px; flex-wrap: wrap; }
+  .messenger-btn {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 20px; border-radius: 10px; text-decoration: none;
+    font-size: 14px; font-weight: 700; transition: all .2s;
+  }
+  .messenger-btn.wa { background: #25d366; color: var(--white); }
+  .messenger-btn.wa:hover { background: #1ebe5a; }
+  .messenger-btn.tg { background: #0088cc; color: var(--white); }
+  .messenger-btn.tg:hover { background: #006fa8; }
+
+  /* ── CONTACTS ── */
+  .contacts-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 48px;
+    align-items: start;
+  }
+  .contact-info { display: flex; flex-direction: column; gap: 16px; }
+  .contact-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: var(--white); border: 1.5px solid var(--border);
+    border-radius: 12px; padding: 16px 20px;
+  }
+  .contact-item .c-icon {
+    width: 40px; height: 40px; background: rgba(37,99,176,0.1);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .contact-item h5 { color: var(--navy); font-size: 14px; margin-bottom: 4px; }
+  .contact-item p, .contact-item a { color: var(--gray); font-size: 14px; text-decoration: none; }
+  .contact-item a:hover { color: var(--blue); }
+  .map-placeholder {
+    background: linear-gradient(135deg, var(--light), #dde8f5);
+    border-radius: 16px; height: 320px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 12px;
+    border: 1.5px solid var(--border); font-size: 48px; color: var(--sky);
+  }
+  .map-placeholder p { color: var(--gray); font-size: 14px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy); padding: 40px 24px;
+    color: rgba(255,255,255,0.5);
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+  }
+  .footer-logo { color: var(--white); font-family: 'Playfair Display', serif; font-size: 18px; }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 13px; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-copy { font-size: 13px; }
+
+  /* ── FLOATING ── */
+  .floating-wa {
+    position: fixed; bottom: 24px; right: 24px; z-index: 99;
+    width: 56px; height: 56px; background: #25d366;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    text-decoration: none; font-size: 26px; box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    transition: all .2s;
+  }
+  .floating-wa:hover { transform: scale(1.1); box-shadow: 0 8px 28px rgba(37,211,102,0.5); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .header-contacts .btn-wa, .header-contacts .btn-callback { display: none; }
+    .form-row { grid-template-columns: 1fr; }
+    .contacts-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .process-steps::before { display: none; }
+    .footer-inner { flex-direction: column; text-align: center; }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-content > * {
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-content > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero-content > *:nth-child(2) { animation-delay: 0.2s; }
+  .hero-content > *:nth-child(3) { animation-delay: 0.3s; }
+  .hero-content > *:nth-child(4) { animation-delay: 0.4s; }
+  .hero-content > *:nth-child(5) { animation-delay: 0.5s; }
+  .hero-content > *:nth-child(6) { animation-delay: 0.6s; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon">📍</div>
+      <div class="logo-text">
+        <strong>КадастрПро</strong>
+        <span>Ростовская область · с 2015 года</span>
+      </div>
+    </a>
+    <div class="header-contacts">
+      <a href="tel:+79001234567" class="header-phone">📞 +7 (900) 123-45-67</a>
+      <a href="https://wa.me/79001234567" class="btn-wa">💬 WhatsApp</a>
+      <button class="btn-callback" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Заказать звонок</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-content">
+      <div class="hero-badge">🏆 Более 2000 успешных объектов</div>
+      <h1>Межевание, техпланы и юридическое сопровождение <span>сделок с недвижимостью</span></h1>
+      <p class="hero-sub">Решим ваш вопрос «под ключ» — от замера до регистрации в Росреестре. Помогаем собственникам, застройщикам и риелторам быстро и без штрафов оформить землю, дома и коммерческие объекты.</p>
+      <p class="hero-region">Работаем по всей <span>Ростовской области</span></p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Бесплатная консультация →</button>
+        <button class="btn-outline" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Наши услуги</button>
+      </div>
+      <div class="hero-advantages">
+        <div class="hero-adv-item"><div class="dot"></div>Точность до сантиметра</div>
+        <div class="hero-adv-item"><div class="dot"></div>Сроки по договору</div>
+        <div class="hero-adv-item"><div class="dot"></div>Гарантия Росреестра</div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-card">
+        <div class="hero-card-icon">📍</div>
+        <h4>Точность до сантиметра</h4>
+        <p>Современное GPS-оборудование и тахеометры Sokkia — никаких погрешностей в документах</p>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-icon">⏱</div>
+        <h4>Сроки по договору</h4>
+        <p>Фиксируем дедлайн в договоре. Просрочка — платим неустойку из собственных средств</p>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-icon">🛡</div>
+        <h4>Гарантия прохождения Росреестра</h4>
+        <p>Если документы не прошли — исправляем за свой счёт. Страхование ответственности до 10 млн ₽</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEGMENTS -->
+<section class="section" id="clients">
+  <div class="section-inner">
+    <div class="section-label">Клиенты</div>
+    <h2 class="section-title">Решаем задачи любой сложности<br>для всех категорий клиентов</h2>
+    <div class="segments-grid">
+      <div class="segment-card">
+        <div class="segment-icon">🏡</div>
+        <h3>Частным лицам</h3>
+        <ul class="segment-list">
+          <li>Межевание дачных и придомовых участков</li>
+          <li>Уточнение границ, раздел, объединение</li>
+          <li>Исправление ошибок в кадастре</li>
+          <li>Споры с соседями, вынос границ в натуру</li>
+          <li>Техпланы домов и построек (дачная амнистия)</li>
+        </ul>
+      </div>
+      <div class="segment-card">
+        <div class="segment-icon">🏗</div>
+        <h3>Застройщикам и девелоперам</h3>
+        <ul class="segment-list">
+          <li>Аудит участков перед покупкой (Due Diligence)</li>
+          <li>Комплексное кадастровое сопровождение</li>
+          <li>Согласование с соседями и администрацией</li>
+          <li>Техпланы на МКД и паркинги</li>
+          <li>Работа с обременениями (ЗОУИТ, ЛЭП, газ)</li>
+        </ul>
+      </div>
+      <div class="segment-card">
+        <div class="segment-icon">🏢</div>
+        <h3>Юридическим лицам</h3>
+        <ul class="segment-list">
+          <li>Оформление земель под магазины, АЗС, склады</li>
+          <li>Межевание для выкупа арендуемой земли</li>
+          <li>Топографическая съемка для проектирования</li>
+          <li>Раздел и объединение участков</li>
+          <li>Постановка на учёт зданий</li>
+        </ul>
+      </div>
+      <div class="segment-card">
+        <div class="segment-icon">🤝</div>
+        <h3>Риелторам и партнёрам</h3>
+        <ul class="segment-list">
+          <li>Срочное межевание для сделок купли-продажи</li>
+          <li>Помощь в упаковке объектов (дом + земля)</li>
+          <li>Агентское вознаграждение за каждого клиента</li>
+          <li>Приоритетное выполнение заявок</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section services-bg" id="services">
+  <div class="section-inner">
+    <div class="section-label">Услуги</div>
+    <h2 class="section-title">Что мы делаем</h2>
+    <p class="section-subtitle">Полный спектр кадастровых, геодезических и юридических работ с землёй и объектами недвижимости</p>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'tab1')">📐 Межевание</button>
+      <button class="tab-btn" onclick="switchTab(this,'tab2')">📋 Техпланы</button>
+      <button class="tab-btn" onclick="switchTab(this,'tab3')">🗺 Геодезия</button>
+      <button class="tab-btn" onclick="switchTab(this,'tab4')">⚖️ Юридические услуги</button>
+    </div>
+    <div class="tab-content active" id="tab1">
+      <div class="service-item"><div class="service-num">01</div><p>Установление границ (если их нет в ЕГРН)</p></div>
+      <div class="service-item"><div class="service-num">02</div><p>Уточнение границ — исправление реестровых ошибок</p></div>
+      <div class="service-item"><div class="service-num">03</div><p>Раздел участка (например, для продажи части)</p></div>
+      <div class="service-item"><div class="service-num">04</div><p>Объединение смежных участков в один</p></div>
+      <div class="service-item"><div class="service-num">05</div><p>Перераспределение — прирезка муниципальной земли</p></div>
+      <div class="service-item"><div class="service-num">06</div><p>Вынос границ в натуру (колышки, забор)</p></div>
+    </div>
+    <div class="tab-content" id="tab2">
+      <div class="service-item"><div class="service-num">01</div><p>Техплан на жилой дом, дачу, гараж</p></div>
+      <div class="service-item"><div class="service-num">02</div><p>Техплан на коммерческие объекты (магазины, офисы, склады)</p></div>
+      <div class="service-item"><div class="service-num">03</div><p>Техплан на МКД для ввода в эксплуатацию</p></div>
+      <div class="service-item"><div class="service-num">04</div><p>Акт обследования (снос объекта с учёта)</p></div>
+    </div>
+    <div class="tab-content" id="tab3">
+      <div class="service-item"><div class="service-num">01</div><p>Топографическая съемка участка — геоподоснова</p></div>
+      <div class="service-item"><div class="service-num">02</div><p>Вынос осей зданий и сооружений</p></div>
+      <div class="service-item"><div class="service-num">03</div><p>Вертикальная планировка территории</p></div>
+      <div class="service-item"><div class="service-num">04</div><p>Исполнительная съемка после строительства</p></div>
+    </div>
+    <div class="tab-content" id="tab4">
+      <div class="service-item"><div class="service-num">01</div><p>Анализ документов на землю перед сделкой</p></div>
+      <div class="service-item"><div class="service-num">02</div><p>Проверка на обременения, зоны, наложения</p></div>
+      <div class="service-item"><div class="service-num">03</div><p>Сопровождение в судах по земельным спорам</p></div>
+      <div class="service-item"><div class="service-num">04</div><p>Консультации по кадастровым вопросам</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICES -->
+<section class="section prices-bg">
+  <div class="section-inner">
+    <div class="section-label">Стоимость</div>
+    <h2 class="section-title">Прозрачные цены — без доплат</h2>
+    <p class="section-subtitle">Точную стоимость рассчитаем после бесплатного анализа ваших документов</p>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-icon">🏠</div>
+        <h4>Межевание до 10 соток</h4>
+        <div class="price-from">от</div>
+        <div class="price-amount">8 000 ₽</div>
+        <div class="price-note">Частные участки</div>
+      </div>
+      <div class="price-card">
+        <div class="price-icon">🌱</div>
+        <h4>Межевание до 1 Га</h4>
+        <div class="price-from">от</div>
+        <div class="price-amount">20 000 ₽</div>
+        <div class="price-note">Крупные участки</div>
+      </div>
+      <div class="price-card">
+        <div class="price-icon">🏗</div>
+        <h4>Под МКД</h4>
+        <div class="price-from">от</div>
+        <div class="price-amount">40 000 ₽</div>
+        <div class="price-note">Для застройщиков</div>
+      </div>
+      <div class="price-card">
+        <div class="price-icon">⚡</div>
+        <h4>Срочный техплан на дом</h4>
+        <div class="price-from">от</div>
+        <div class="price-amount">5 000 ₽</div>
+        <div class="price-note">За 2 рабочих дня</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <div class="section-label">Почему мы</div>
+    <h2 class="section-title">5 причин доверить нам<br>оформление земли</h2>
+    <div class="utp-grid">
+      <div class="utp-card">
+        <div class="utp-num">1</div>
+        <div>
+          <h4>Работаем с 2015 года</h4>
+          <p>Более 2000 успешных объектов. Знаем все подводные камни Ростовской области, включая особенности местных реестров и судебной практики.</p>
+        </div>
+      </div>
+      <div class="utp-card">
+        <div class="utp-num">2</div>
+        <div>
+          <h4>Штатные геодезисты и своё оборудование</h4>
+          <p>Не привлекаем субподрядчиков — контролируем качество сами. GPS-приёмники и тахеометры Sokkia в нашем парке оборудования.</p>
+        </div>
+      </div>
+      <div class="utp-card">
+        <div class="utp-num">3</div>
+        <div>
+          <h4>Гарантия сроков по договору</h4>
+          <p>Фиксируем дедлайн в договоре. Если не успели — платим неустойку. Никаких отговорок и переносов без вашего согласия.</p>
+        </div>
+      </div>
+      <div class="utp-card">
+        <div class="utp-num">4</div>
+        <div>
+          <h4>Страхование ответственности до 10 млн ₽</h4>
+          <p>Ваша безопасность застрахована. В случае ошибки с нашей стороны — полная компенсация ущерба.</p>
+        </div>
+      </div>
+      <div class="utp-card">
+        <div class="utp-num">5</div>
+        <div>
+          <h4>Прозрачные цены</h4>
+          <p>Стоимость фиксируется в договоре до начала работ. Никаких доплат, «неожиданных» расходов и скрытых комиссий.</p>
+        </div>
+      </div>
+      <div class="utp-bonus">
+        <div class="utp-bonus-icon">🎁</div>
+        <div>
+          <h4>Бесплатный аудит вашего участка</h4>
+          <p>Перед началом работ мы бесплатно анализируем ваши документы, выявляем риски и предлагаем оптимальное решение. Это ни к чему не обязывает.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section class="section cases-bg" id="cases">
+  <div class="section-inner">
+    <div class="section-label">Кейсы</div>
+    <h2 class="section-title">Результаты, которые говорят сами за себя</h2>
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-header">
+          <div class="case-tag">Частный клиент</div>
+          <h4>Частный дом, г. Ростов-на-Дону</h4>
+        </div>
+        <div class="case-body">
+          <div class="case-row">
+            <div class="case-label problem">🔴 Проблема</div>
+            <p>Границы не установлены, соседи захватили 2 сотки, продажа невозможна.</p>
+          </div>
+          <div class="case-row">
+            <div class="case-label solution">🔵 Решение</div>
+            <p>Межевание, согласование границ с соседями, вынос в натуру.</p>
+          </div>
+          <div class="case-row">
+            <div class="case-label result">🟢 Результат</div>
+            <div class="case-result-badge">
+              <p>✅ Выписка ЕГРН получена. Дом продан за 3 недели.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-header">
+          <div class="case-tag">Застройщик</div>
+          <h4>ЖК «Новый», Аксайский район</h4>
+        </div>
+        <div class="case-body">
+          <div class="case-row">
+            <div class="case-label problem">🔴 Проблема</div>
+            <p>Участок имел наложение на земли лесфонда — стройка заморожена.</p>
+          </div>
+          <div class="case-row">
+            <div class="case-label solution">🔵 Решение</div>
+            <p>Исправление реестровой ошибки, согласование с Рослесхозом.</p>
+          </div>
+          <div class="case-row">
+            <div class="case-label result">🟢 Результат</div>
+            <div class="case-result-badge">
+              <p>✅ Разрешение на строительство получено, запуск в срок.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-header">
+          <div class="case-tag">Коммерция</div>
+          <h4>Торговый центр «Центральный»</h4>
+        </div>
+        <div class="case-body">
+          <div class="case-row">
+            <div class="case-label problem">🔴 Проблема</div>
+            <p>Арендуемая земля — нужно выкупить участок под зданием.</p>
+          </div>
+          <div class="case-row">
+            <div class="case-label solution">🔵 Решение</div>
+            <p>Межевание, подготовка схемы, согласование с администрацией.</p>
+          </div>
+          <div class="case-row">
+            <div class="case-label result">🟢 Результат</div>
+            <div class="case-result-badge">
+              <p>✅ Выкуп по кадастровой стоимости — экономия 30%.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section" id="process">
+  <div class="section-inner">
+    <div class="section-label">Как работаем</div>
+    <h2 class="section-title">Просто и понятно: 5 шагов<br>к готовым документам</h2>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-circle">1</div>
+        <h4>Заявка</h4>
+        <p>Оставляете заявку на сайте или звоните нам</p>
+      </div>
+      <div class="process-step">
+        <div class="step-circle">2</div>
+        <h4>Консультация</h4>
+        <p>Бесплатно анализируем документы, уточняем задачу</p>
+      </div>
+      <div class="process-step">
+        <div class="step-circle">3</div>
+        <h4>Договор</h4>
+        <p>Фиксируем сроки, стоимость и этапы работ</p>
+      </div>
+      <div class="process-step">
+        <div class="step-circle">4</div>
+        <h4>Выезд и работы</h4>
+        <p>Геодезист приезжает, проводит замеры, готовит документы</p>
+      </div>
+      <div class="process-step">
+        <div class="step-circle">5</div>
+        <h4>Результат</h4>
+        <p>Готовые документы + помощь с подачей в Росреестр</p>
+      </div>
+    </div>
+    <p style="text-align:center; color:var(--gray); margin-top:32px; font-size:14px;">
+      💬 На всех этапах вы на связи с персональным менеджером
+    </p>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section" style="background: var(--light);">
+  <div class="section-inner">
+    <div class="section-label">Команда</div>
+    <h2 class="section-title">Кто будет работать над вашим объектом</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">👨‍💼</div>
+        <h4>Иванов Иван Иванович</h4>
+        <div class="role">Главный кадастровый инженер</div>
+        <p>Стаж 12 лет. Аттестат кадастрового инженера №77-09-01234. Специализация — сложные объекты и споры.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👷</div>
+        <h4>Петров Пётр Петрович</h4>
+        <div class="role">Начальник геодезической службы</div>
+        <p>Опыт 10 лет. Руководит полевыми работами и контролирует точность геодезических измерений.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👩‍⚖️</div>
+        <h4>Сидорова Мария Андреевна</h4>
+        <div class="role">Юрист по земельному праву</div>
+        <p>Специализируется на земельных спорах, судебных делах и сопровождении сделок с недвижимостью.</p>
+      </div>
+    </div>
+    <div class="tech-block">
+      <div class="tech-icon">🛰</div>
+      <div>
+        <h4>Техника и ПО</h4>
+        <p>Современные GPS-приёмники, тахеометры Sokkia, лазерные дальномеры. Лицензионное ПО «ТехноКад-Экспресс» и «ПК ЗО». Работаем строго по действующему законодательству и техническим регламентам.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section reviews-bg" id="reviews">
+  <div class="section-inner">
+    <div class="section-label">Отзывы</div>
+    <h2 class="section-title">Нас рекомендуют</h2>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>«Спасибо компании за оперативное межевание. Обратился для продажи участка, сделали всё за 5 дней. Отдельное спасибо менеджеру за консультации и помощь с документами.»</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">А</div>
+          <div>
+            <div class="reviewer-name">Алексей Смирнов</div>
+            <div class="reviewer-role">Частный клиент</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>«Работаем с этой командой не первый год. Очень ценю их подход к сложным объектам: всегда подскажут риски, предложат оптимальный вариант. Ни одной сорванной сделки.»</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">Д</div>
+          <div>
+            <div class="reviewer-name">Дмитрий Козлов</div>
+            <div class="reviewer-role">Директор АН «Дом и Ко»</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>«Заказывали комплексное сопровождение для жилого комплекса. Справились отлично: быстро, чётко, без лишних вопросов. Техпланы на дом сделали за 3 дня.»</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">С</div>
+          <div>
+            <div class="reviewer-name">Сергей Воронов</div>
+            <div class="reviewer-role">Главный инженер СК «Базис»</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="section-inner">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Ответы на самые частые вопросы</h2>
+    <div class="faq-list">
+      <div class="faq-item open">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Сколько стоит межевание?
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a open">
+          Цена зависит от площади и сложности участка. Ориентир:
+          <ul style="list-style:none; margin-top:8px;">
+            <li style="padding:4px 0;">· Участок до 10 соток — от <strong>8 000 ₽</strong></li>
+            <li style="padding:4px 0;">· Участок до 1 Га — от <strong>20 000 ₽</strong></li>
+            <li style="padding:4px 0;">· Под многоквартирный дом — от <strong>40 000 ₽</strong></li>
+          </ul>
+          Точную стоимость скажем после бесплатного анализа документов.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Какие документы нужны для начала работ?
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a">Паспорт, правоустанавливающие документы на землю (свидетельство, договор купли-продажи, выписка ЕГРН), при наличии — старые планы и схемы участка.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Как долго делается техплан на дом?
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a">Обычно 3–7 рабочих дней. Если нужно срочно — выполним за 2 рабочих дня.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Вы работаете с ипотечными сделками?
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a">Да, мы готовим полный пакет документов для банка и Росреестра. Работаем со всеми крупными банками Ростовской области. Ипотечные покупатели могут быть спокойны.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Что делать, если сосед не подписывает акт согласования?
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a">Мы проведём процедуру в соответствии с законом: уведомим соседа официально, составим акт с пометкой об отказе. Это не является препятствием для регистрации. Если спор перейдёт в суд — наше заключение станет доказательством.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Работаете ли с судами?
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a">Да. Наши кадастровые инженеры готовят заключения для суда, а юристы помогают отстаивать интересы клиента на всех стадиях разбирательства.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="cta-inner">
+    <div class="section-label" style="background:rgba(245,158,11,0.15);color:var(--accent);">Консультация бесплатно</div>
+    <h2>Начните с бесплатной консультации</h2>
+    <p>Оставьте заявку — ответим за 15 минут, подскажем порядок действий и предварительную стоимость. Это ни к чему не обязывает.</p>
+    <div class="contact-form">
+      <div class="form-row">
+        <input type="text" class="form-input" placeholder="Ваше имя">
+        <input type="tel" class="form-input" placeholder="+7 (___) ___-__-__">
+      </div>
+      <div class="form-row single">
+        <input type="text" class="form-input" placeholder="Тип объекта или кадастровый номер (необязательно)">
+      </div>
+      <button class="btn-submit">Получить консультацию бесплатно →</button>
+      <div class="form-note">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</div>
+    </div>
+    <div class="messengers">
+      <a href="https://wa.me/79001234567" class="messenger-btn wa">💬 WhatsApp</a>
+      <a href="https://t.me/kadastropro" class="messenger-btn tg">✈️ Telegram</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTS -->
+<section class="section" id="contacts">
+  <div class="section-inner">
+    <div class="section-label">Контакты</div>
+    <h2 class="section-title">Как нас найти</h2>
+    <div class="contacts-grid">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="c-icon">📞</div>
+          <div>
+            <h5>Телефон</h5>
+            <a href="tel:+79001234567">+7 (900) 123-45-67</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="c-icon">✉️</div>
+          <div>
+            <h5>Email</h5>
+            <a href="mailto:info@kadastropro.ru">info@kadastropro.ru</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="c-icon">📍</div>
+          <div>
+            <h5>Адрес офиса</h5>
+            <p>г. Ростов-на-Дону, ул. Пушкинская, д. 1, оф. 205</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="c-icon">🕐</div>
+          <div>
+            <h5>Часы работы</h5>
+            <p>Пн–Пт: 9:00–18:00 · Сб: 10:00–15:00</p>
+          </div>
+        </div>
+      </div>
+      <div class="map-placeholder">
+        📍
+        <p>Карта проезда (Яндекс.Карты)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">КадастрПро · Ростовская область</div>
+    <div class="footer-links">
+      <a href="#">Политика конфиденциальности</a>
+      <a href="#">Реквизиты</a>
+      <a href="#">Карта сайта</a>
+    </div>
+    <div class="footer-copy">© 2026 Кадастровая компания «КадастрПро»</div>
+  </div>
+</footer>
+
+<!-- FLOATING WA -->
+<a href="https://wa.me/79001234567" class="floating-wa" title="WhatsApp">💬</a>
+
+<script>
+function switchTab(btn, tabId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+}
+
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const answer = item.querySelector('.faq-a');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.faq-a').classList.remove('open');
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    answer.classList.add('open');
+  }
+}
+</script>
+</body>
+</html>
